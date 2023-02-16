@@ -2,11 +2,13 @@
 #pack "button.png"
 #uselib "user32.dll"
 #cfunc EnumDisplaySettingsA "EnumDisplaySettingsA" int, int, var
-	//
+	//•Ï”‰Šú‰»
 	dim Mode_Dev,44
 	dim index
 	modelist = ""
 	mode = 0
+	
+	//‰ğ‘œ“xˆê——
 	repeat 
 		if EnumDisplaySettingsA(0, cnt, Mode_Dev) == 0 : break
 			if Mode_Dev(26)=32 {
