@@ -1,18 +1,19 @@
+#cmpopt varinit 1
 #pack "button.png"
 #uselib "user32.dll"
-#cfunc EnumDisplaySettings "EnumDisplaySettingsA" int, int, var
+#cfunc EnumDisplaySettingsA "EnumDisplaySettingsA" int, int, var
 	//
-	dim DevMode,44
-	modelist_txt=""
-	mode=0
+	dim Mode_Dev,44
+	dim index
+	modelist = ""
+	mode = 0
 	repeat 
-		if EnumDisplaySettings(0,cnt,DevMode)=0 {break}
-			if DevMode(26)=32 {
-				DispWidth(mode)=DevMode(27)
-				DispHeight(mode)=DevMode(28)
-				modelist_txt+=""+DispWidth(mode)+" x "+DispHeight(mode)+"\n"
+		if EnumDisplaySettingsA(0, cnt, Mode_Dev) == 0 : break
+			if Mode_Dev(26)=32 {
+				D_Width(mode) = Mode_Dev(27) : D_Height(mode) = Mode_Dev(28)
+				modelist += "" + D_Width(mode) + " x " + D_Height(mode)+"\n"
 				mode++
-		}
+			}
 	loop
 
 	//ボタン画像
@@ -20,19 +21,19 @@
 	picload "button.png"
 	
 	//画面表示
-	bgscr 0, 140, 20, , 0, 0:	gsel 0,2
+	bgscr 0, 140, 20, , 0, 0:	gsel 0, 2
 	//コンボボックス
 	objsize 100, 20
-	pos 0, 0:	combox index, 100, modelist_txt
+	pos 0, 0:	combox index, 100, modelist
 	//ボタン類
 	objsize 20,20
-	pos 100, 0:	objimage 1,0,0,21,0,42,0	:button "", *_disp//解像度変更
-	pos 120, 0:	objimage 1,0,20,21,20,42,20	:button "", *_end//プログラム終了
+	pos 100, 0:	objimage 1, 0, 0, 21, 0, 42, 0:		button "", *_disp//解像度変更
+	pos 120, 0:	objimage 1, 0, 20, 21, 20, 42, 20:	button "", *_end//プログラム終了
 	stop
 
 //解像度変更
 *_disp
-	chgdisp 1, DispWidth(index), DispHeight(index)
+	chgdisp 1, D_Width(index), D_Height(index)
 	stop
 
 //プログラム終了
